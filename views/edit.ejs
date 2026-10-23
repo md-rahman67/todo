@@ -1,16 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TAYO</title>
-</head>
-<body>
-    <h3><%= todo._id %> -> this user wants to edit todo's name</h3>
-    <form action="/todos/<%= todo._id %>?_method=PUT" method="post">
-        <textarea name="title"><%= todo.title %></textarea>
-        <button type="submit">edit</button>
+<% layout("./layouts/boilerplate") %>
+    </head>
 
-    </form>
-</body>
-</html>
+    <body>
+        <div class="row">
+
+            <div class="col-4 offset-4">
+                <br>
+                <h3>Edit Todo's name</h3>
+                <hr>
+                <form action="/todos/<%= todo._id %>?_method=PUT" method="post">
+
+                    <div>
+                        <label class="form-label">Enter new name</label>
+                        <textarea class="form-control" name="title" rows="3" cols="5"><%= todo.title %></textarea>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-success">edit</button>
+                </form>
+                <hr>
+            </div>
+
+        </div>
+    </body>

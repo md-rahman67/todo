@@ -2,7 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Todo = require("./models/todo.model.js");
 const path = require("path");
-const methodOverride = require("method-override")
+const methodOverride = require("method-override");
+const ejsMate = require("ejs-mate");
 
 const app = express();
 
@@ -17,6 +18,7 @@ main().then(()=> console.log("connected")).catch(err => console.log(err));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
+app.engine("ejs", ejsMate);
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -28,12 +30,37 @@ app.get("/todos", async (req, res, next) => {
     res.render("todo.ejs", { todos });
 })
 
+//* add form route
+app.get("/todos/new", (req, res) => {
+    res.render("add.ejs");
+})
+
+//* add route
+app.post("/todos", async (req, res) => {
+    let { title } = req.body;
+    let newTodo = new Todo({
+        title: title
+    });
+
+    await Todo.create(newTodo);
+    res.redirect("/todos");
+})
+
+app.delete("/todos/:id", async(req, res) => {
+    let { id } = req.params;
+    let deleted = await Todo.findByIdAndDelete(id);
+    console.log(deleted);
+    res.redirect("/todos");
+})
+
 //* show route
 app.get("/todos/:id", async (req, res) => {
     let { id } = req.params;
     let todo = await Todo.findById(id);
     res.render("show.ejs", { todo });
 })
+
+
 
 //* edit form route
 app.get("/todos/:id/edit", async (req, res) => {
@@ -55,6 +82,8 @@ app.put("/todos/:id", async(req, res) => {
 
     res.redirect("/todos");
 })
+
+
 
 app.listen(8080, ()=>{
     console.log("responding to port: 8080");

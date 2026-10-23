@@ -1,48 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout("./layouts/boilerplate") %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TAYO</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
-</head>
+    <body>
+        <!-- <a href="/listings/new">New Listing</a> -->
+        <h3>All Todos</h3>
 
-<body>
-    <div class="row">
-
-
-
-        <% for(todo of todos){ %>
-            <div class="col-8 offset-2">
-                <section class="card mb-3" style="max-width: 320px">
-                    <img src="https://i.pinimg.com/736x/0f/8c/31/0f8c3192e2977808641a425f8ec1ebda.jpg"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <%= todo.title %>
-                        </h4>
-                        <span>
-
-                            <button class="btn btn-primary">
-                                <a href="/todos/<%= todo._id %>">Tasks</a>
-                            </button>
-
-                            <button class="btn btn-primary">
-                                <a href="/todos/<%= todo._id %>/edit">Edit</a>
-                            </button>
-                        </span>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <% for (todo of todos) { %>
+                <div class="col">
+                    <div class="card h-100" style="width: 100%; height: auto;">
+                        <a href="/todos/<%= todo._id %>">
+                            <img src="https://i.pinimg.com/1200x/18/d2/d1/18d2d1777738a20aa5c38a681e973388.jpg"
+                                class="card-img-top" alt="...">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <%= todo.title %>
+                            </h4>
+                            <span>
+                                <a href="/todos/<%= todo._id %>/edit" class="btn btn-primary">Edit</a>
+                                 &nbsp;&nbsp;&nbsp;&nbsp;
+                                <form action="/todos/<%= todo._id %>?_method=DELETE" method="post" style="display: inline;">
+                                    <button class="btn btn-danger">Delete</button>
+                                </form>
+                            </span>
+                        </div>
                     </div>
-                </section>
-            </div>
-            <% } %>
+                </div>
+                <% } %>
+        </div>
 
-    </div>
 
-    <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-1a/pXj49ZQ1aHEmrJ+gMw1otqoVsYwlEnlD8mIfY2TV03r20Y0CN7uqx1tQogjPL"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+    </body>
