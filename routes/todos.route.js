@@ -36,7 +36,7 @@ router.delete("/:id", async(req, res) => {
 //* show route
 router.get("/:id", async (req, res) => {
     let { id } = req.params;
-    let todo = await Todo.findById(id);
+    let todo = await Todo.findById(id).populate("tasks");
     res.render("show.ejs", { todo });
 })
 

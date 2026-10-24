@@ -1,11 +1,51 @@
 <% layout("./layouts/boilerplate") %>
 
-<body>
+    <body>
+
+        <div class="row">
+
+            <div class="col offset-2">
+
+                <div class="col-3 add-task">
+                    <form action="/todos/<%= todo._id %>/tasks" method="post">
+
+                        <div class="mb-3">
+                            <label for="task" class="form-label">Enter Task</label>
+                            <input type="text" name="task" placeholder="task" id="task" class="form-control" required>
+                            <!-- <div class="invalid-feedback">Title is required</div> -->
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Task</button>
+                    </form>
+                </div>
+                <br><br>
+
+                <h3>
+                    <%= todo.title %>
+                </h3>
+
+                <div class="card tasks" style="width: 18rem;">
+                    <div class="card-header">
+                        Tasks
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <% for (task of todo.tasks) { %>
+                            <li class="list-group-item">
+                                <%= task.tasks %>
+
+                                    <form action="/todos/<%= todo._id %>/tasks/<%= task._id %>?_method=DELETE" method="post" style="display: inline;">
+                                        <button class="btn">
+                                            <i data-lucide="trash-2" class="small-i"></i>
+                                        </button>
+                                    </form>
+                            </li>
+                            <% } %>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
 
 
-    <h2><%= todo._id %></h2>
-    <h3><%= todo.title %></h3>
 
-
-
-</body>
+    </body>

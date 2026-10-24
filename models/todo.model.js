@@ -16,4 +16,11 @@ const todoSchema = new Schema({
     ]
 });
 
+
+todoSchema.post("findOneAndDelete", async(data) => {
+    if(data){
+        await Task.deleteMany({_id: {$in: data.tasks}});
+    }
+})
+
 module.exports = mongoose.model("Todo", todoSchema);
