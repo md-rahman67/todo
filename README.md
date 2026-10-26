@@ -17,7 +17,6 @@ TAYO is a simple and responsive Todo app built to organize and manage daily task
 - EJS
 - Bootstrap
 - HTML & CSS
-- Font Awesome
 
 ### Installation
 1. Clone this repository.
