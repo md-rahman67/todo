@@ -38,7 +38,8 @@ body {
 
 @media (max-width: 499.98px) {
     .new-todo-btn {
-        display: none;
+        font-size: 0.5rem;
+        width: 1rem;
     }
 }
 
