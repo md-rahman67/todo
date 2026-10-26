@@ -1,15 +1,42 @@
-<nav class="navbar navbar-expand-md bg-body-tertiary border-bottom sticky-top">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#"> <i data-lucide="list-check"></i>
-            <b>TAYO</b> </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark border-bottom border-secondary sticky-top shadow-sm">
+    <div class="container-fluid px-3 px-md-4">
+
+        <!-- Brand -->
+        <a class="navbar-brand d-flex align-items-center gap-2 me-4" href="/todos">
+            <i data-lucide="list-check" style="width: 27px; height: 27px;"></i>
+            <span class="fw-bold fs-4">TAYO</span>
+        </a>
+
+        <!-- Mobile Toggle -->
+        <button
+            class="navbar-toggler border-secondary shadow-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
             <span class="navbar-toggler-icon"></span>
         </button>
+
+        <!-- Navigation Links -->
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link" href="/todos">Todos</a>
-                <a href="/todos/new" class="nav-link">+Add</a>
+            <div class="navbar-nav gap-md-2 mt-3 mt-md-0">
+
+                <a class="nav-link active rounded-3 px-3" href="/todos">
+                    <i data-lucide="layout-grid" class="me-1" style="width: 17px; height: 17px;"></i>
+                    Todos
+                </a>
+
+                <a class="nav-link rounded-3 px-3" href="/todos/new">
+                    <i data-lucide="plus" class="me-1" style="width: 17px; height: 17px;"></i>
+                    Add Todo
+                </a>
+
             </div>
         </div>
+
     </div>
 </nav>
