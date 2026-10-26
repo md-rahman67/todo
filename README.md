@@ -1,5 +1,23 @@
-# TAYO -> A Todo APplication
-TAYO is a Todo App that I'm currently building as a way to practice and improve my development skills
+# TAYO - Todo App
 
-## work in progress...
-I'm just getting started with this project and will be adding features as I learn and grow.
+TAYO is a simple Todo app that helps you manage your tasks and stay organized.
+
+### Features
+- Create, edit, and delete Todo lists.
+- Add and delete tasks.
+- Responsive UI with Bootstrap.
+- Delete confirmation modal.
+
+### Tech Stack
+- Node.js
+- Express.js
+- MongoDB
+- EJS
+- Bootstrap
+
+### Installation
+1. Clone the repository.
+2. Run `npm install`.
+3. Start the server using `node app.js`.
+4. Open `http://localhost:8080` in your browser.
+

@@ -4,15 +4,12 @@ const Todo = require("../models/todo.model.js");
 const router = express.Router({mergeParams: true});
 
 
+//* Root route
 router.get("/", async (req, res, next) => {
     let todos = await Todo.find();
     res.render("todo.ejs", { todos });
 })
 
-//* add form route
-router.get("/new", (req, res) => {
-    res.render("add.ejs");
-})
 
 //* add route
 router.post("/", async (req, res) => {
