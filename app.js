@@ -6,7 +6,9 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const todoRouter = require("./routes/todos.route.js");
+const taskRouter = require("./routes/tasks.route.js");
 
+// 
 const app = express();
 
 //* Mongoose connection------
@@ -26,46 +28,16 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(methodOverride("_method"));
 
-//* routes-------------------
+//todo routes-------------------
+
+//* todo routes
 app.use("/todos", todoRouter);
 
+//* task routes
+app.use("/todos/:id/tasks", taskRouter);
 
-//* add tasks route
-app.post("/todos/:id/tasks", async(req, res) => {
-    let { id } = req.params;
-    let todo = await Todo.findById(id);
 
-    let { task } = req.body;
 
-    let newTask = new Task({
-        tasks: task
-    });
-
-    todo.tasks.push(newTask);
-
-    await newTask.save();
-    await todo.save();
-    res.redirect(`/todos/${id}`);
-})
-
-//* delete tasks
-app.delete("/todos/:id/tasks/:taskId", async(req, res, next) => {
-    let { id, taskId } = req.params;
-
-    await Todo.findByIdAndUpdate(id, {$pull: {tasks: taskId}});
-    await Task.findByIdAndDelete(taskId);
-    res.redirect(`/todos/${id}`);
-})
-
-app.post("/todos/:id/tasks/:taskId", async(req, res) => {
-    let { id, taskId } = req.params;
-    let { checked } = req.body;
-    let task = await Task.findById(taskId)
-    task.checked = req.body.checked;
-    await task.save();
-    console.log(checked);
-    res.redirect(`/todos/${id}`);
-})
 
 
 app.listen(8080, ()=>{
