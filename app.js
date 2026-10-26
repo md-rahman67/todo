@@ -52,8 +52,18 @@ app.post("/todos/:id/tasks", async(req, res) => {
 app.delete("/todos/:id/tasks/:taskId", async(req, res, next) => {
     let { id, taskId } = req.params;
 
-    await Todo.findByIdAndUpdate(id, {$pull: {tasks: taskId}})
+    await Todo.findByIdAndUpdate(id, {$pull: {tasks: taskId}});
     await Task.findByIdAndDelete(taskId);
+    res.redirect(`/todos/${id}`);
+})
+
+app.post("/todos/:id/tasks/:taskId", async(req, res) => {
+    let { id, taskId } = req.params;
+    let { checked } = req.body;
+    let task = await Task.findById(taskId)
+    task.checked = req.body.checked;
+    await task.save();
+    console.log(checked);
     res.redirect(`/todos/${id}`);
 })
 

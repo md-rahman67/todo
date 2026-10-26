@@ -5,6 +5,10 @@ const taskSchema = new Schema({
     tasks: {
         type: String,
         required: true
+    },
+    checked: {
+        type: Boolean,
+        default: false
     }
 });
 
