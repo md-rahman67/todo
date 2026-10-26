@@ -29,8 +29,16 @@ body {
     padding: 1rem !important;
 }
 
+
+.modal-backdrop.show {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+
 @media (max-width: 499.98px) {
     .new-todo-btn {
         display: none;
     }
 }
+
