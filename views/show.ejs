@@ -137,22 +137,10 @@
                                     </div>
                                 </div>
 
-                                <!-- <form
-                                action="/todos/<%= todo._id %>/tasks/<%= task._id %>?_method=DELETE"
-                                method="post"
-                                onsubmit="return confirm('Delete this task?')"
-                            >
-                                <button
-                                    type="submit"
-                                    class="btn btn-outline-danger btn-sm"
-                                    aria-label="Delete task"
-                                    title="Delete task"
-                                >
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </button>
-                            </form> -->
-
                             </li>
+
+
+                            <!--* If empty task  -->
                             <% } %>
 
                                 <% if (todo.tasks.length===0) { %>
