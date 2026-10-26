@@ -28,3 +28,9 @@ body {
     border-radius: 0.5rem !important;
     padding: 1rem !important;
 }
+
+@media (max-width: 499.98px) {
+    .new-todo-btn {
+        display: none;
+    }
+}

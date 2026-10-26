@@ -1,33 +1,83 @@
 <% layout("./layouts/boilerplate") %>
 
-    <body>
-        <!-- <a href="/listings/new">New Listing</a> -->
-        <h3>All Todos</h3>
+    <div class="container py-5">
 
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="fw-bold mb-2">All Todos</h1>
+                <p class="text-secondary mb-0">Organize your tasks, one list at a time.</p>
+            </div>
+
+            <a href="/todos/new" class="btn btn-primary rounded-pill px-4 new-todo-btn">
+                <i class="fa-solid fa-plus me-2"></i>New Todo
+            </a>
+        </div>
+
+        <!-- Todo Cards -->
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            <% for (todo of todos) { %>
+
+            <% for (let todo of todos) { %>
+
                 <div class="col">
-                    <div class="card h-100" style="width: 100%; height: auto;">
-                        <a href="/todos/<%= todo._id %>">
+                    <div class="card h-100 bg-dark text-light border-secondary rounded-4 overflow-hidden shadow-sm">
+
+                        <!-- Image -->
+                        <a href="/todos/<%= todo._id %>" class="text-decoration-none">
                             <img src="https://i.pinimg.com/1200x/18/d2/d1/18d2d1777738a20aa5c38a681e973388.jpg"
-                                class="card-img-top" alt="...">
+                                class="card-img-top" alt="Todo cover" style="height: 220px; object-fit: cover;">
                         </a>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <%= todo.title %>
-                            </h4>
-                            <span>
-                                <a href="/todos/<%= todo._id %>/edit" class="btn btn-primary">Edit</a>
-                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                <form action="/todos/<%= todo._id %>?_method=DELETE" method="post" style="display: inline;">
-                                    <button class="btn btn-danger">Delete</button>
+
+                        <!-- Card Content -->
+                        <div class="card-body p-4 d-flex flex-column">
+
+                            <div class="d-flex justify-content-between align-items-start gap-2 mb-3">
+                                <h5 class="card-title fw-bold mb-0 text-break">
+                                    <%= todo.title %>
+                                </h5>
+
+                                <span class="badge rounded-pill text-bg-primary">
+                                    <i class="fa-solid fa-list-check me-1"></i> Todo
+                                </span>
+                            </div>
+
+                            <a href="/todos/<%= todo._id %>" class="text-info text-decoration-none mb-4">
+                                View tasks <i class="fa-solid fa-arrow-right ms-1"></i>
+                            </a>
+
+                            <div class="d-flex gap-2 mt-auto">
+
+                                <a href="/todos/<%= todo._id %>/edit" class="btn btn-outline-light flex-grow-1">
+                                    <i class="fa-solid fa-pen me-2"></i>Edit
+                                </a>
+
+                                <form action="/todos/<%= todo._id %>?_method=DELETE" method="post" class="flex-grow-1"
+                                    onsubmit="return confirm('Are you sure you want to delete this todo?')">
+                                    <button type="submit" class="btn btn-outline-danger w-100">
+                                        <i class="fa-solid fa-trash-can me-2"></i>Delete
+                                    </button>
                                 </form>
-                            </span>
+
+                            </div>
+
                         </div>
                     </div>
                 </div>
+
                 <% } %>
+
         </div>
 
+        <!-- Empty State -->
+        <% if (todos.length===0) { %>
+            <div class="text-center py-5">
+                <i class="fa-regular fa-clipboard fa-3x text-secondary mb-3"></i>
+                <h4>No todos yet</h4>
+                <p class="text-secondary">Create your first todo to get started.</p>
+                <a href="/todos/new" class="btn btn-primary rounded-pill px-4">
+                    <i class="fa-solid fa-plus me-2"></i>Create Todo
+                </a>
+            </div>
+            <% } %>
 
-    </body>
+    </div>
