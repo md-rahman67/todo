@@ -8,8 +8,12 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const todoRouter = require("./routes/todos.route.js");
 const taskRouter = require("./routes/tasks.route.js");
+// const userRouter = require("./routes/user.router.js");
 const session = require("express-session");
 const ExpressError = require("./utils/express-error.js");
+const passport = require("passport");
+const localStrategy = require("passport-local");
+const User = require("./models/user.model.js");
 
 // 
 const app = express();
@@ -43,6 +47,11 @@ const sessionOptions = {
 
 app.use(session(sessionOptions));
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 //todo routes-------------------
 
 //* todo routes
@@ -52,6 +61,21 @@ app.use("/todos", todoRouter);
 app.use("/todos/:id/tasks", taskRouter);
 
 
+app.get("/signup", (req, res) => {
+    res.render("./users/signup.ejs");
+})
+
+app.post("/signup", async(req, res) => {
+    let {username, email, password} = req.body;
+    let newUser = new User({
+        username: username,
+        email: email
+    });
+    let kaboom = await User.register(newUser, password);
+    console.log(kaboom); 
+    res.redirect("/todos");
+
+})
 
 //! error handling----------------->
 app.use((req, res, next) => {
