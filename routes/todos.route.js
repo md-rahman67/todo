@@ -23,6 +23,18 @@ router.post("/", validateTodos, async (req, res) => {
     res.redirect("/todos");
 })
 
+//* logout route
+router.get("/logout", (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+
+        req.flash("success", "You're logged out")
+        res.redirect("/todos");
+    })
+})
+
 //* delete route
 router.delete("/:id", async(req, res) => {
     let { id } = req.params;
@@ -60,6 +72,8 @@ router.put("/:id", validateTodos, async(req, res) => {
 
     res.redirect("/todos");
 })
+
+
 
 
 module.exports = router;

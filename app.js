@@ -8,7 +8,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const todoRouter = require("./routes/todos.route.js");
 const taskRouter = require("./routes/tasks.route.js");
-// const userRouter = require("./routes/user.router.js");
+const userRouter = require("./routes/user.router.js");
 const session = require("express-session");
 const ExpressError = require("./utils/express-error.js");
 const passport = require("passport");
@@ -68,30 +68,9 @@ app.use("/todos", todoRouter);
 //* task routes
 app.use("/todos/:id/tasks", taskRouter);
 
+//* user routes
+app.use("/", userRouter)
 
-app.get("/signup", (req, res) => {
-    res.render("./users/signup.ejs");
-})
-
-app.post("/signup", async(req, res) => {
-    let {username, email, password} = req.body;
-    let newUser = new User({
-        username: username,
-        email: email
-    });
-    let kaboom = await User.register(newUser, password);
-    console.log(kaboom); 
-    res.redirect("/todos");
-})
-
-app.get("/login", (req, res) => {
-    res.render("./users/login.ejs");
-})
-
-app.post("/login", passport.authenticate("local", {failureRedirect: "/login", failureFlash: true}), async(req, res) => {
-    req.flash("success", "Welcome to TAYO");
-    res.redirect("/todos");
-})
 
 //! error handling----------------->
 app.use((req, res, next) => {
