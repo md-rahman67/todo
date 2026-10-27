@@ -9,6 +9,7 @@ const ejsMate = require("ejs-mate");
 const todoRouter = require("./routes/todos.route.js");
 const taskRouter = require("./routes/tasks.route.js");
 const session = require("express-session");
+const ExpressError = require("./utils/express-error.js");
 
 // 
 const app = express();
@@ -52,7 +53,15 @@ app.use("/todos/:id/tasks", taskRouter);
 
 
 
+//! error handling----------------->
+app.use((req, res, next) => {
+    throw new ExpressError(404, "Page not Found!!");
+})
 
+app.use((err, req, res, next) => {
+    let { statusCode = 500, message = "Something went wrong, go back previous page"} = err;
+    res.status(statusCode).render("err.ejs", {statusCode, message});
+}) 
 
 app.listen(8080, ()=>{
     console.log("responding to port: 8080");

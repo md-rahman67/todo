@@ -1,5 +1,6 @@
 const express = require("express");
 const Todo = require("../models/todo.model.js");
+const {validateTodos} = require("../middleware.js");
 
 const router = express.Router({mergeParams: true});
 
@@ -12,7 +13,7 @@ router.get("/", async (req, res, next) => {
 
 
 //* add route
-router.post("/", async (req, res) => {
+router.post("/", validateTodos, async (req, res) => {
     let { title } = req.body;
     let newTodo = new Todo({
         title: title
@@ -47,7 +48,7 @@ router.get("/:id/edit", async (req, res) => {
 })
 
 //* edit route
-router.put("/:id", async(req, res) => {
+router.put("/:id", validateTodos, async(req, res) => {
     let { id } = req.params;
     let { title } = req.body;
 
