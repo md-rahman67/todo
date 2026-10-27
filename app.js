@@ -12,8 +12,9 @@ const taskRouter = require("./routes/tasks.route.js");
 const session = require("express-session");
 const ExpressError = require("./utils/express-error.js");
 const passport = require("passport");
-const localStrategy = require("passport-local");
+const LocalStrategy = require("passport-local");
 const User = require("./models/user.model.js");
+const flash = require("connect-flash");
 
 // 
 const app = express();
@@ -46,12 +47,19 @@ const sessionOptions = {
 }
 
 app.use(session(sessionOptions));
+app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
+})
 //todo routes-------------------
 
 //* todo routes
@@ -74,7 +82,15 @@ app.post("/signup", async(req, res) => {
     let kaboom = await User.register(newUser, password);
     console.log(kaboom); 
     res.redirect("/todos");
+})
 
+app.get("/login", (req, res) => {
+    res.render("./users/login.ejs");
+})
+
+app.post("/login", passport.authenticate("local", {failureRedirect: "/login", failureFlash: true}), async(req, res) => {
+    req.flash("success", "Welcome to TAYO");
+    res.redirect("/todos");
 })
 
 //! error handling----------------->
