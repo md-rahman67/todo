@@ -9,7 +9,6 @@ const ejsMate = require("ejs-mate");
 const todoRouter = require("./routes/todos.route.js");
 const taskRouter = require("./routes/tasks.route.js");
 const session = require("express-session");
-const
 
 // 
 const app = express();
@@ -41,6 +40,7 @@ const sessionOptions = {
     }
 }
 
+app.use(session(sessionOptions));
 
 //todo routes-------------------
 
