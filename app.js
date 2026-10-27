@@ -1,3 +1,4 @@
+const dotenv = require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const Todo = require("./models/todo.model.js");
@@ -7,6 +8,8 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const todoRouter = require("./routes/todos.route.js");
 const taskRouter = require("./routes/tasks.route.js");
+const session = require("express-session");
+const
 
 // 
 const app = express();
@@ -24,9 +27,20 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.engine("ejs", ejsMate);
 
+app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
 
-app.use(methodOverride("_method"));
+const sessionOptions = {
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true
+    }
+}
+
 
 //todo routes-------------------
 
