@@ -1,13 +1,13 @@
 const express = require("express");
 const Todo = require("../models/todo.model.js");
 const Task = require("../models/tasks.model.js");
-const {validateTasks} = require("../middleware.js");
+const {isLoggedIn} = require("../middleware.js");
 
 const router = express.Router({mergeParams: true});
 
 
 //* add tasks route
-router.post("/", validateTasks, async(req, res) => {
+router.post("/", isLoggedIn, async(req, res) => {
     let { id } = req.params;
     let todo = await Todo.findById(id);
 

@@ -2,12 +2,13 @@ const express = require("express");
 const router = express.Router({mergeParams: true});
 const User = require("../models/user.model.js");
 const passport = require("passport");
+const {validateUsers} = require("../middleware.js");
 
 router.get("/signup", (req, res) => {
     res.render("./users/signup.ejs");
 })
 
-router.post("/signup", async(req, res) => {
+router.post("/signup", validateUsers, async(req, res) => {
     let {username, email, password} = req.body;
     let newUser = new User({
         username: username,

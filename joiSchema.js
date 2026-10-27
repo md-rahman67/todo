@@ -8,13 +8,11 @@ module.exports = joiTodoSchema;
 
 //* ---------------------------------------------------------------*
 
-const joiTaskSchema = Joi.object({
-    tasks: Joi.string().trim().required(),
+// const joiTaskSchema = Joi.object({
+//     tasks: Joi.string()
+// })
 
-    checked: Joi.boolean().default(false)
-})
-
-module.exports = joiTaskSchema;
+// module.exports = joiTaskSchema;
 
 //*---------------------------------------------------------------------*
 
