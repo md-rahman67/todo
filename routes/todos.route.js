@@ -7,8 +7,10 @@ const router = express.Router({mergeParams: true});
 
 
 //* Root route
-router.get("/", async (req, res, next) => {
-    let todos = await Todo.find();
+router.get("/",isLoggedIn, async (req, res, next) => {
+    let todos = await Todo.find({
+        createdBy: req.user._id
+    });
     res.render("todo.ejs", { todos });
 })
 
@@ -53,6 +55,9 @@ router.delete("/:id",isLoggedIn, async(req, res) => {
 router.get("/:id", async (req, res) => {
     let { id } = req.params;
     let todo = await Todo.findById(id).populate("tasks").populate("createdBy");
+    // const todo = await Todo.find({
+    //     createdBy: req.user._id
+    // }).populate("tasks").populate("createdBy");
 
     if(!todo){
         throw new ExpressError(404, "Resource not found");
