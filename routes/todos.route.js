@@ -11,6 +11,7 @@ router.get("/",isLoggedIn, async (req, res, next) => {
     let todos = await Todo.find({
         createdBy: req.user._id
     });
+
     res.render("todo.ejs", { todos });
 })
 
