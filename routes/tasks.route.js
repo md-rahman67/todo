@@ -21,6 +21,7 @@ router.post("/", isLoggedIn, async(req, res) => {
 
     await newTask.save();
     await todo.save();
+    req.flash("success", "Task Created");
     res.redirect(`/todos/${id}`);
 })
 
@@ -30,6 +31,7 @@ router.delete("/:taskId", async(req, res, next) => {
 
     await Todo.findByIdAndUpdate(id, {$pull: {tasks: taskId}});
     await Task.findByIdAndDelete(taskId);
+    req.flash("error", "Task Deleted");
     res.redirect(`/todos/${id}`);
 })
 
@@ -40,6 +42,7 @@ router.post("/:taskId", async(req, res) => {
     task.checked = req.body.checked;
     await task.save();
     console.log(checked);
+    req.flash("success", "Task Completed");
     res.redirect(`/todos/${id}`);
 })
 

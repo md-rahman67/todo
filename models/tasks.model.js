@@ -9,7 +9,7 @@ const taskSchema = new Schema({
     checked: {
         type: Boolean,
         default: false
-    }
+    },
 });
 
 module.exports = mongoose.model("Task", taskSchema);

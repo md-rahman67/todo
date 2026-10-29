@@ -35,6 +35,12 @@ body {
     -webkit-backdrop-filter: blur(6px);
 }
 
+.signup{
+    color: blue !important;
+}
+.signup:hover{
+    text-decoration: underline blue;
+}
 
 @media (max-width: 499.98px) {
     .new-todo-btn {

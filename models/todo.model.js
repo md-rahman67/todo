@@ -13,7 +13,12 @@ const todoSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "Task" 
         }
-    ]
+    ],
+
+    createdBy: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }
 });
 
 

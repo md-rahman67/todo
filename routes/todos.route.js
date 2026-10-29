@@ -16,11 +16,15 @@ router.get("/", async (req, res, next) => {
 //* add route
 router.post("/",isLoggedIn, validateTodos, async (req, res) => {
     let { title } = req.body;
+    let createdBy = req.user._id;
+    console.log(createdBy);
     let newTodo = new Todo({
-        title: title
+        title: title,
+        createdBy: createdBy
     });
 
     await Todo.create(newTodo)
+    req.flash("success", "New Todo Created");
     res.redirect("/todos");
 })
 
@@ -41,13 +45,14 @@ router.delete("/:id",isLoggedIn, async(req, res) => {
     let { id } = req.params;
     let deleted = await Todo.findByIdAndDelete(id);
     console.log(deleted);
+    req.flash("error", "Todo deleted");
     res.redirect("/todos");
 })
 
 //* show route
 router.get("/:id", async (req, res) => {
     let { id } = req.params;
-    let todo = await Todo.findById(id).populate("tasks");
+    let todo = await Todo.findById(id).populate("tasks").populate("createdBy");
 
     if(!todo){
         throw new ExpressError(404, "Resource not found");
@@ -58,11 +63,11 @@ router.get("/:id", async (req, res) => {
 
 
 //* edit form route
-router.get("/:id/edit", async (req, res) => {
-    let { id } = req.params;
-    let todo = await Todo.findById(id);
-    res.render("edit.ejs", { todo });
-})
+// router.get("/:id/edit", async (req, res) => {
+//     let { id } = req.params;
+//     let todo = await Todo.findById(id);
+//     res.render("edit.ejs", { todo });
+// })
 
 //* edit route
 router.put("/:id", isLoggedIn, async(req, res) => {
@@ -74,6 +79,8 @@ router.put("/:id", isLoggedIn, async(req, res) => {
             title: title
         }
     });
+
+    req.flash("success", "Todo Name changed");
 
     res.redirect("/todos");
 })
